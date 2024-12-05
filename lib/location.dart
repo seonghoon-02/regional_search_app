@@ -10,19 +10,19 @@
 //       "mapy": "375326783"
 //     }
 
-class Regional {
+class Location {
   final String title;
   final String link;
   final String category;
   final String roadAddress;
 
-  Regional(
+  Location(
       {required this.title,
       required this.link,
       required this.category,
       required this.roadAddress});
 
-  Regional.fromJson(Map<String, dynamic> json)
+  Location.fromJson(Map<String, dynamic> json)
       : this(
           title: json["title"],
           link: json["link"],

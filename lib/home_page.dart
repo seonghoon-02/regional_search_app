@@ -52,9 +52,9 @@ class _HomePageState extends ConsumerState<HomePage> {
             children: [
               SizedBox(height: 10),
               Expanded(
-                child: homeState.regional == null
+                child: homeState.location == null
                     ? Center(child: Text('검색 결과가 없습니다')) // 결과가 없을 때
-                    : HomeListView(regionals: homeState.regional!), // 데이터를 전달
+                    : HomeListView(locations: homeState.location!), // 데이터를 전달
               ),
             ],
           ),
