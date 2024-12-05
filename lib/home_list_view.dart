@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:regional_search_app/detail_page.dart';
 import 'package:regional_search_app/location.dart';
 
 class HomeListView extends StatelessWidget {
@@ -12,15 +13,20 @@ class HomeListView extends StatelessWidget {
       itemCount: locations.length, // 항목 수를 데이터 개수로 설정
       itemBuilder: (context, index) {
         // 데이터를 이용해 각 항목 렌더링
-        return listContainer(locations[index]);
+        return listContainer(locations[index], context);
       },
       separatorBuilder: (context, index) => SizedBox(height: 10),
     );
   }
 
-  Widget listContainer(Location location) {
+  Widget listContainer(Location location, BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DetailPage(link: location.link)));
+      },
       child: Padding(
         padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8, top: 8),
         child: Container(
@@ -39,6 +45,7 @@ class HomeListView extends StatelessWidget {
                 style: TextStyle(fontSize: 14),
               ),
               Text(location.roadAddress), // JSON에서 받아온 주소 표시
+              Text(location.link),
             ],
           ),
         ),
