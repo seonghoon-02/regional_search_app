@@ -8,7 +8,6 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('ddddddddddddddddd$link');
     if (link == '' || link[4] != 's') {
       return Scaffold(
         appBar: AppBar(),

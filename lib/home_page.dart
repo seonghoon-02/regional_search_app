@@ -26,6 +26,17 @@ class _HomePageState extends ConsumerState<HomePage> {
       },
       child: Scaffold(
         appBar: AppBar(
+          actions: [
+            GestureDetector(
+              onTap: () {
+                //ddddddddddddddddd
+              },
+              child: Container(
+                  width: 50,
+                  height: double.infinity,
+                  child: Icon(Icons.gps_fixed)),
+            )
+          ],
           title: TextField(
             onSubmitted: (String query) {
               search(query);
