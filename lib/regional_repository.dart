@@ -9,7 +9,7 @@ class RegionalRepository {
       Client client = Client();
       Response response = await client.get(
         Uri.parse(
-            'https://openapi.naver.com/v1/search/local.json?query=$query'),
+            'https://openapi.naver.com/v1/search/local.json?query=$query&display=5'),
         headers: {
           'X-Naver-Client-Id': 'NQjTLWn4F9M5xZa8rtnR', // 네이버 클라이언트 ID
           'X-Naver-Client-Secret': 'vAyWh8FTfv', // 네이버 클라이언트 Secret

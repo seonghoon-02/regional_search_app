@@ -10,17 +10,16 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   TextEditingController textEditingController = TextEditingController();
+
   void search(String text) {
-    try {
-      ref.read(homeViewModelProvider.notifier).search(text);
-      print("search 성공");
-    } catch (e) {
-      print("Error during search: $e");
-    }
+    // 검색 수행
+    ref.read(homeViewModelProvider.notifier).search(text);
   }
 
   @override
   Widget build(BuildContext context) {
+    final homeState = ref.watch(homeViewModelProvider); // 상태를 관찰
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -30,57 +29,36 @@ class _HomePageState extends ConsumerState<HomePage> {
           title: TextField(
             onSubmitted: (String query) {
               search(query);
-              print(query);
             },
             maxLines: 1,
             controller: textEditingController,
             decoration: InputDecoration(
-              contentPadding: EdgeInsets.symmetric(
-                  horizontal: 11, vertical: 11), // TextField 내부 높이 조정
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 11, vertical: 11),
               hintText: '검색어를 입력해 주세요',
               hintStyle: TextStyle(
-                color: Colors.grey, // 힌트 텍스트 색상 설정
-                fontSize: 14, // 힌트 텍스트 크기 설정
+                color: Colors.grey,
+                fontSize: 14,
               ),
-              border: MaterialStateOutlineInputBorder.resolveWith(
-                (states) {
-                  if (states.contains(WidgetState.focused)) {
-                    return OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.black),
-                    );
-                  }
-                  return OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.grey),
-                  );
-                },
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: Colors.grey),
               ),
             ),
           ),
-          actions: [
-            GestureDetector(
-              onTap: () {
-                //ssssssssss
-              },
-              child: Container(
-                width: 50,
-                height: 50,
-                color: Colors.transparent,
-                child: Icon(Icons.search),
-              ),
-            ),
-          ],
         ),
         body: SafeArea(
-            child: Column(children: [
-          SizedBox(
-            height: 10,
+          child: Column(
+            children: [
+              SizedBox(height: 10),
+              Expanded(
+                child: homeState.regional == null
+                    ? Center(child: Text('검색 결과가 없습니다')) // 결과가 없을 때
+                    : HomeListView(regionals: homeState.regional!), // 데이터를 전달
+              ),
+            ],
           ),
-          Expanded(
-            child: HomeListView(),
-          )
-        ])),
+        ),
       ),
     );
   }
