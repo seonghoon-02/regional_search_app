@@ -5,6 +5,8 @@ import 'package:regional_search_app/home_view_model.dart';
 import 'package:regional_search_app/geolocator_helper.dart';
 
 class HomePage extends ConsumerStatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   ConsumerState<HomePage> createState() => _HomePageState();
 }
@@ -12,6 +14,7 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   TextEditingController textEditingController = TextEditingController();
 
+  @override
   void dispose() {
     textEditingController.dispose();
     super.dispose();
@@ -44,10 +47,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                   textEditingController.text = localName;
                   search(localName);
                 }
-
-                print('gps = $localName and ${localName.runtimeType}');
               },
-              child: Container(
+              child: const SizedBox(
                 width: 50,
                 height: double.infinity,
                 child: Icon(Icons.gps_fixed),
@@ -62,15 +63,15 @@ class _HomePageState extends ConsumerState<HomePage> {
             controller: textEditingController, // TextEditingController 연결
             decoration: InputDecoration(
               contentPadding:
-                  EdgeInsets.symmetric(horizontal: 11, vertical: 11),
+                  const EdgeInsets.symmetric(horizontal: 11, vertical: 11),
               hintText: '검색어를 입력해 주세요',
-              hintStyle: TextStyle(
+              hintStyle: const TextStyle(
                 color: Colors.grey,
                 fontSize: 14,
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: Colors.grey),
+                borderSide: const BorderSide(color: Colors.grey),
               ),
             ),
           ),
@@ -78,10 +79,11 @@ class _HomePageState extends ConsumerState<HomePage> {
         body: SafeArea(
           child: Column(
             children: [
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Expanded(
-                child: homeState.location == null
-                    ? Center(child: Text('검색 결과가 없습니다')) // 결과가 없을 때
+                //결과값이 null이거나 []일 경우 메세지 표시
+                child: homeState.location == null || homeState.location!.isEmpty
+                    ? const Center(child: Text('검색 결과가 없습니다')) // 결과가 없을 때
                     : HomeListView(locations: homeState.location!), // 데이터를 전달
               ),
             ],

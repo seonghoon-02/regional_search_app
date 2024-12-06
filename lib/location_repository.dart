@@ -35,7 +35,7 @@ class LocationRepository {
 
         return locations; // List<Location> 반환
       } else {
-        print('Request failed with status: ${response.statusCode}');
+        print('Request failed: ${response.statusCode}');
         return [];
       }
     } catch (e) {

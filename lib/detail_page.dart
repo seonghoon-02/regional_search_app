@@ -11,7 +11,7 @@ class DetailPage extends StatelessWidget {
     if (link == '' || link[4] != 's') {
       return Scaffold(
         appBar: AppBar(),
-        body: Container(
+        body: const SizedBox(
           height: double.infinity,
           width: double.infinity,
           child: Center(child: Text('URL 정보가 없습니다.')),

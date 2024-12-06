@@ -11,11 +11,8 @@ class GeolocatorHelper {
     // 위치 권한 확인 및 요청
     final permission = await Geolocator.checkPermission();
     if (_isDenied(permission)) {
-      print('bbbbb');
-
       final request = await Geolocator.requestPermission();
       if (_isDenied(request)) {
-        print('aaaaa');
         return null; // 권한이 없으면 null 반환
       }
     }
@@ -34,11 +31,10 @@ class GeolocatorHelper {
         lat: position.latitude,
         lng: position.longitude,
       );
-      // print(object);
       // 가장 첫 번째 full_nm 반환 (리스트가 비었으면 null 반환)
       return areas.isNotEmpty ? areas.first : null;
     } catch (e) {
-      print("Error getting position or administrative area: $e");
+      print("getAdministrativeArea 함수 위치: $e");
       return null; // 에러 발생 시 null 반환
     }
   }

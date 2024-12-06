@@ -36,7 +36,6 @@ class VWorldRepository {
     required double lat,
     required double lng,
   }) async {
-    print('$lat ssssssss$lng sssssssssssssssssssssss');
     final response = await _client.get(
       'https://api.vworld.kr/req/data',
       queryParameters: {

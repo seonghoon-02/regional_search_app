@@ -31,7 +31,13 @@ class HomeListView extends StatelessWidget {
         padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8, top: 8),
         child: Container(
           decoration: BoxDecoration(
-              color: Colors.grey, borderRadius: BorderRadius.circular(10)),
+            color: Colors.white,
+            border: Border.all(
+              color: Colors.grey,
+              width: 1,
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
           padding: EdgeInsets.all(15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,7 +51,8 @@ class HomeListView extends StatelessWidget {
                 style: TextStyle(fontSize: 14),
               ),
               Text(location.roadAddress), // JSON에서 받아온 주소 표시
-              Text(location.link),
+              //test위해 삽입
+              // Text(location.link),
             ],
           ),
         ),

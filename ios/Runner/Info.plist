@@ -47,8 +47,10 @@
 	<true/>
 	<!-- 위치 권한 요청 설명 추가 -->
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We need your location for...</string>
+	<string>```dart
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>동네 정보를 가져오기 위해 위치 권한을 허용해 주세요</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>We need your location for...</string>
+	<string>동네 정보를 가져오기 위해 위치 권한을 허용해 주세요</string>
 </dict>
 </plist>
