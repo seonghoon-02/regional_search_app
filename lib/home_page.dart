@@ -12,6 +12,11 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   TextEditingController textEditingController = TextEditingController();
 
+  void dispose() {
+    textEditingController.dispose();
+    super.dispose();
+  }
+
   void search(String text) {
     // 검색 수행
     ref.read(homeViewModelProvider.notifier).search(text);
@@ -30,23 +35,31 @@ class _HomePageState extends ConsumerState<HomePage> {
           actions: [
             GestureDetector(
               onTap: () async {
+                // GPS로부터 행정구역 가져오기
                 String? localName =
                     await GeolocatorHelper.getAdministrativeArea();
-                print(
-                    'sssssssssssssssgps = ${localName} and${localName.runtimeType}');
+
+                if (localName != null) {
+                  // TextField에 localName 업데이트
+                  textEditingController.text = localName;
+                  search(localName);
+                }
+
+                print('gps = $localName and ${localName.runtimeType}');
               },
               child: Container(
-                  width: 50,
-                  height: double.infinity,
-                  child: Icon(Icons.gps_fixed)),
-            )
+                width: 50,
+                height: double.infinity,
+                child: Icon(Icons.gps_fixed),
+              ),
+            ),
           ],
           title: TextField(
             onSubmitted: (String query) {
               search(query);
             },
             maxLines: 1,
-            controller: textEditingController,
+            controller: textEditingController, // TextEditingController 연결
             decoration: InputDecoration(
               contentPadding:
                   EdgeInsets.symmetric(horizontal: 11, vertical: 11),
