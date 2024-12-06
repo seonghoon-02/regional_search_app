@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:regional_search_app/home_list_view.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:regional_search_app/home_view_model.dart';
+import 'package:regional_search_app/geolocator_helper.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   @override
@@ -28,8 +29,11 @@ class _HomePageState extends ConsumerState<HomePage> {
         appBar: AppBar(
           actions: [
             GestureDetector(
-              onTap: () {
-                //ddddddddddddddddd
+              onTap: () async {
+                String? localName =
+                    await GeolocatorHelper.getAdministrativeArea();
+                print(
+                    'sssssssssssssssgps = ${localName} and${localName.runtimeType}');
               },
               child: Container(
                   width: 50,
