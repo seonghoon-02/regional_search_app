@@ -1,12 +1,13 @@
 import 'package:dio/dio.dart';
 
-class VWorldRepository {
+class VworldRepository {
   final Dio _client = Dio(BaseOptions(
     // 설정안할 시 실패 응답 시 throw
     validateStatus: (status) => true,
   ));
 
-  Future<List<String>> findByName(String query) async {
+  /// Query에 해당하는 첫 번째 `title`을 반환하는 함수
+  Future<String> findTitle(String query) async {
     final response = await _client.get(
       'https://api.vworld.kr/req/search',
       queryParameters: {
@@ -15,20 +16,20 @@ class VWorldRepository {
         'query': query,
         'type': 'DISTRICT',
         'category': 'L4',
-        'size': 100, // Optional
       },
     );
 
     if (response.statusCode == 200 &&
         response.data['response']['status'] == 'OK') {
-      // 행정주소 외 정보는 쓰지 않아서 모델생성 X(개인취향)
-      // 써드파티 API(외부 API) 모델링 시 프로젝트에 외부 모델이 추가가되어 관리 힘듦
-      return List.of(response.data['response']['result']['items'])
-          .map((e) => e['title'].toString())
-          .toList();
+      // `items` 리스트에서 첫 번째 `title`을 반환
+      final items = List.of(response.data['response']['result']['items']);
+      if (items.isNotEmpty) {
+        return items.first['title'].toString(); // 첫 번째 `title`
+      }
     }
 
-    return [];
+    // 결과가 없거나 오류 발생 시 빈 문자열 반환
+    return '';
   }
 
   //gps 좌표로 행정구역 가져오기
@@ -44,7 +45,6 @@ class VWorldRepository {
         'key': 'D9A81EA7-97D4-39DF-AC1A-4C62DB0D8C25',
         'geomfilter': 'point($lng $lat)',
         'geometry': 'false',
-        'size': 100, // Optional
       },
     );
 

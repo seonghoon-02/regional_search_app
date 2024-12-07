@@ -1,5 +1,5 @@
 import 'package:geolocator/geolocator.dart';
-import 'vworld_repository.dart'; // VWorldRepository가 있는 파일을 import
+import 'vworld_repository.dart'; // VworldRepository가 있는 파일을 import
 
 class GeolocatorHelper {
   static bool _isDenied(LocationPermission permission) {
@@ -24,7 +24,7 @@ class GeolocatorHelper {
       );
 
       // VWorldRepository 인스턴스 생성
-      final vworldRepository = VWorldRepository();
+      final vworldRepository = VworldRepository();
 
       // 좌표를 이용해 행정구역 데이터 가져오기
       final areas = await vworldRepository.findByLatLng(

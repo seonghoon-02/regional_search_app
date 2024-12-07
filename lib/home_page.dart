@@ -3,6 +3,7 @@ import 'package:regional_search_app/home_list_view.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:regional_search_app/home_view_model.dart';
 import 'package:regional_search_app/geolocator_helper.dart';
+import 'package:regional_search_app/vworld_repository.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,6 +14,7 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   TextEditingController textEditingController = TextEditingController();
+  String locationName = ''; // 검색 키워드를 저장할 상태
 
   @override
   void dispose() {
@@ -21,13 +23,13 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   void search(String text) {
-    // 검색 수행
     ref.read(homeViewModelProvider.notifier).search(text);
   }
 
   @override
   Widget build(BuildContext context) {
     final homeState = ref.watch(homeViewModelProvider); // 상태를 관찰
+    final vworldRepository = VworldRepository();
 
     return GestureDetector(
       onTap: () {
@@ -38,14 +40,15 @@ class _HomePageState extends ConsumerState<HomePage> {
           actions: [
             GestureDetector(
               onTap: () async {
-                // GPS로부터 행정구역 가져오기
                 String? localName =
                     await GeolocatorHelper.getAdministrativeArea();
 
                 if (localName != null) {
-                  // TextField에 localName 업데이트
                   textEditingController.text = localName;
                   search(localName);
+                  setState(() {
+                    locationName = localName; // 검색 키워드 상태 업데이트
+                  });
                 }
               },
               child: const SizedBox(
@@ -56,11 +59,17 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
           ],
           title: TextField(
-            onSubmitted: (String query) {
-              search(query);
+            onSubmitted: (String query) async {
+              //TextField 에 입력된 키워드를 vworldRepository 이용하여 지역명으로 변환
+              String foundTitle = await vworldRepository.findTitle(query);
+              setState(() {
+                locationName = foundTitle; // 검색 키워드 상태 업데이트
+              });
+              //변환된 지역명을 통해 서치api 호출
+              search(foundTitle);
             },
             maxLines: 1,
-            controller: textEditingController, // TextEditingController 연결
+            controller: textEditingController,
             decoration: InputDecoration(
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 11, vertical: 11),
@@ -81,9 +90,15 @@ class _HomePageState extends ConsumerState<HomePage> {
             children: [
               const SizedBox(height: 10),
               Expanded(
-                //결과값이 null이거나 []일 경우 메세지 표시
                 child: homeState.location == null || homeState.location!.isEmpty
-                    ? const Center(child: Text('검색 결과가 없습니다')) // 결과가 없을 때
+                    ? Center(
+                        child: Text(
+                          locationName.isEmpty
+                              ? '검색 결과가 없습니다' // 기본 메시지
+                              : '검색 결과가 없습니다: $locationName', // 검색 키워드 포함
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ) // 결과가 없을 때
                     : HomeListView(locations: homeState.location!), // 데이터를 전달
               ),
             ],
