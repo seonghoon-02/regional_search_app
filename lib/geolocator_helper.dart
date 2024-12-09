@@ -1,5 +1,5 @@
 import 'package:geolocator/geolocator.dart';
-import 'vworld_repository.dart'; // VworldRepository가 있는 파일을 import
+import 'vworld_repository.dart';
 
 class GeolocatorHelper {
   static bool _isDenied(LocationPermission permission) {

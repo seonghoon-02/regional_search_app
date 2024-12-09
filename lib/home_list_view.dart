@@ -51,8 +51,6 @@ class HomeListView extends StatelessWidget {
                 style: const TextStyle(fontSize: 14),
               ),
               Text(location.roadAddress), // JSON에서 받아온 주소 표시
-              //test위해 삽입
-              // Text(location.link),
             ],
           ),
         ),

@@ -25,6 +25,7 @@ class DetailPage extends StatelessWidget {
           url: WebUri(link), // WebUri 생성자에 직접 URL 문자열 전달
         ),
         onLoadStart: (controller, url) {
+          //웹페이지 로딩 로그 기록
           print("Started loading: $url");
         },
         onLoadStop: (controller, url) {

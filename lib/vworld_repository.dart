@@ -50,8 +50,6 @@ class VworldRepository {
 
     if (response.statusCode == 200 &&
         response.data['response']['status'] == 'OK') {
-      // 행정주소 외 정보는 쓰지 않아서 모델생성 X(개인취향)
-      // 써드파티 API(외부 API) 모델링 시 프로젝트에 외부 모델이 추가가되어 관리 힘듦
       return List.of(response.data['response']['result']['featureCollection']
               ['features'])
           .map((e) => e['properties']['full_nm'].toString())

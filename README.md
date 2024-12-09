@@ -1,16 +1,72 @@
-# regional_search_app
+<h1  align="center">
+<p  align="center">지역 검색 앱
 
-A new Flutter project.
+</h1>
+</p>
 
-## Getting Started
+## 프로젝트 개요
 
-This project is a starting point for a Flutter application.
+### 네이버 검색 Open API, VWROLD API를 이용하여 지역 검색 기능을 구현
 
-A few resources to get you started if this is your first Flutter project:
+#### 💡 '지역 검색 앱'은 제작하면서 flutter 숙련 과정을 익히기 위해 만들어졌습니다.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 팀원 구성
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+| **고성훈** |
+
+### 프로젝트 일정
+
+24/12/04~24/12/09
+
+### 사용 기술
+
+| ProviderScope | ConsumerStatefulWidget | TextField | geolocator | inappwebview | 네이버 검색 Open API | VWROLD API |
+
+## 주요 기능
+
+| 홈 화면                 | 웹 페이지 화면        |
+| ----------------------- | --------------------- |
+| 검색 창, 검색 결과 화면 | 선택한 웹 페이지 화면 |
+
+- 검색창에 검색어 입력시 해당하는 지역 명을 VWROLD API에서 조회
+- 조회 된 검색어로 네이버 검색api에서 지역 검색을 진행
+- 검색된 리스트 클릭하면 해당 웹페이지로 이동
+
+<br/>
+
+## TroubleShooting
+
+#### listview 사이즈 초과 이슈
+
+1. 문제 정의
+
+- 핸드폰의 gps 위치정보 가져와서 api로 검색할 때 검색 되지 않음.
+
+2. 사실 수집
+
+- gps 위치정보가 제대로 가져와 지는지, api 명령어가 잘 작동을 한건지 확인 필요.
+
+3. 원인 추론
+
+- 에뮬레이터 위치정보 저장값 잘못 저장, gps 권한 설정 미흡, api에서 가져오는 명령어 오류 등.
+
+4. 조사 방법 결정
+
+- 처음부터 설정하듯이 단계를 다시 밟아봄.
+- print문을 이용해 값 저장 및 전달이 되었는지 체크
+
+5. 조사 방법 구현
+
+- AndroidManifest.xml, Info.plist파일의 권한설정 부분 체크
+- 에뮬레이터의 gps 정보 설정 부분 체크
+- gps 정보 가져오는 함수에 print문 넣어 체크
+- api에 전달 될 때 print문으로 gps값 다시 체크
+- api에서 회신된 값 print문으로 체크.
+
+6. 결과 관찰
+
+- gps값에는 문제가 없었음.
+- api에서 회신 올때 빈 함수로 전달됨 확인.
+- 확인시 api키 값이 잘못됨.
+- 강의 교육 받을때 코드를 복사 붙여넣기 할 때 api키값을 수정 안한 것이 원인.
+- 키값 수정하여 정상 확인.

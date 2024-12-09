@@ -92,7 +92,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               //지역 명으로 수정된 검색어 표시
               Container(
                 alignment: Alignment.centerLeft,
-                padding: EdgeInsets.only(left: 15),
+                padding: const EdgeInsets.only(left: 15),
                 child: Text('검색어 : $locationName'),
               ),
               const SizedBox(height: 10),

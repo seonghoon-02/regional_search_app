@@ -26,9 +26,6 @@ class HomeViewModel extends Notifier<HomeState> {
 }
 
 // 5. HomeViewModel을 관리할 관리자 만들어주기
-// NotifierProvider<HomeViewModel, HomeState>
-// => HomeState 상태를 관리하는 HomeViewModel 관리해주세요.
-// ref.watch를 통해 homeViewModelProvider를 부르면 아직 생성안됐으면 만들어서 주고, 있으면 있던거 주세요!
 final homeViewModelProvider = NotifierProvider<HomeViewModel, HomeState>(() {
   return HomeViewModel();
 });
