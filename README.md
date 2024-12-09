@@ -36,7 +36,7 @@
 
 ## TroubleShooting
 
-#### listview 사이즈 초과 이슈
+#### GPS 정보를 이용한 API 검색시 빈 리턴값 반환 이슈
 
 1. 문제 정의
 
