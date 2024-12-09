@@ -89,17 +89,37 @@ class _HomePageState extends ConsumerState<HomePage> {
           child: Column(
             children: [
               const SizedBox(height: 10),
+              //지역 명으로 수정된 검색어 표시
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.only(left: 15),
+                child: Text('검색어 : $locationName'),
+              ),
+              const SizedBox(height: 10),
               Expanded(
-                child: homeState.location == null || homeState.location!.isEmpty
-                    ? Center(
-                        child: Text(
-                          locationName.isEmpty
-                              ? '검색 결과가 없습니다' // 기본 메시지
-                              : '검색 결과가 없습니다: $locationName', // 검색 키워드 포함
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                      ) // 결과가 없을 때
-                    : HomeListView(locations: homeState.location!), // 데이터를 전달
+                child: FutureBuilder(
+                  future: Future.delayed(const Duration(seconds: 1)), // 2초 대기
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      // 로딩 상태일 때 로딩 표시
+                      return const Center(child: CircularProgressIndicator());
+                    } else {
+                      // 데이터가 없을 때 메시지 표시
+                      return homeState.location == null ||
+                              homeState.location!.isEmpty
+                          ? Center(
+                              child: Text(
+                                locationName.isEmpty
+                                    ? '검색 결과가 없습니다' // 기본 메시지
+                                    : '검색 결과가 없습니다: $locationName', // 검색 키워드 포함
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                            )
+                          : HomeListView(
+                              locations: homeState.location!); // 데이터를 전달
+                    }
+                  },
+                ),
               ),
             ],
           ),
